@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_21_014225) do
+ActiveRecord::Schema.define(version: 2020_06_22_191533) do
 
   create_table "stocks", force: :cascade do |t|
     t.string "name"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 2020_06_21_014225) do
     t.integer "purchase_amount"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "ticker_symbol"
   end
 
   create_table "users", force: :cascade do |t|
