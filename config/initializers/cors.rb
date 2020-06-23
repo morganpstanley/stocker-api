@@ -1,9 +1,9 @@
-config.middleware.insert_before 0, Rack::Cors do
+Rails.application.config.middleware.insert_before 0, Rack::Cors do
     allow do
-      origins '*'
+      origins "*"
+   
       resource '*',
-        :headers => :any,
-        :methods => [:get, :post, :delete, :put, :patch, :options, :head],
-        :max_age => 0
+        headers: :any,
+        methods: [:get, :post, :put, :patch, :delete, :options, :head]
     end
   end
