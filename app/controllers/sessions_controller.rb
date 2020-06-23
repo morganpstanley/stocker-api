@@ -1,10 +1,5 @@
 class SessionsController < ApplicationController
 
-    def new
-        redirect_if_logged_in
-        user = User.new
-    end
-
     def login
         @user = User.find_by(username: params[:username])
         if @user && @user.authenticate(params[:password])
@@ -16,30 +11,48 @@ class SessionsController < ApplicationController
     end
 
     def create
-        if auth
-            user = User.find_or_create_by_omniauth(auth)
-            session[:user_id] = user.id
-            redirect_to '/users'
+       @user = User.find_by(username: session_params[:username])
+        
+       if @user && @user.authenticate(session_params[:password])
+            login!
+            render json: {
+                logged_in: true,
+                user: @user
+            }
         else
-            user = User.find_by(email: params[:email])
-            if user && user.authenticate(params[:password])
-                session[:user_id] = user.id
-                redirect_to '/users'
-            else
-                render :login
-            end
+            render json: {
+                status: 401,
+                error: 'no user found'
+            }
+        end 
+    end
+
+    def is_logged_in?
+        if logged_in? && current_user
+            render json: {
+                logged_in: true,
+                user: current_user
+            }
+        else
+            render json: {
+                logged_in: false,
+                message: 'no user found'
+            }
         end
     end
 
-    def logout
-        session.destroy
-        redirect_to login_path
+    def destroy
+        logout!
+        render json: {
+            status: 200,
+            logged_out: true
+        }
     end
 
 private
 
-    def user_params
-        params.require(:user).permit(:username, :password, :password_confirmation)
+    def session_params
+        params.require(:user).permit(:username, :password)
     end
     
 end
