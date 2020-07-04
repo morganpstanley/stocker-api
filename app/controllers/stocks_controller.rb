@@ -1,17 +1,19 @@
 class StocksController < ApplicationController
+    skip_before_action :verify_authenticity_token
 
     def index
-        stocks = Stock.all
-        render json: stocks
+        if session[:user_id]
+            @stocks = Stock.where("user_id = ?", session[:user_id])
+        else
+            @stocks = Stock.all
+        end
+        render json: @stocks
     end
 
     def create
-        stock = Stock.create(
-            name: params[:name], 
-            user_id: params[:user_id],
-            purchase_amount: params[:purchase_amount],
-            purchase_price: params[:purchase_price]
-        )
+        stock = Stock.new(stock_params)
+        stock.user_id = current_user.id
+        stock.save
         render json: stock
     end
 
@@ -22,7 +24,7 @@ class StocksController < ApplicationController
     end
 
     def destroy
-        stock = Stock.find_by_id(params[:id])
+        stock = Stock.find_by_id(params.require(:id))
         Stock.destroy(params[:id])
     end
     
@@ -30,7 +32,7 @@ class StocksController < ApplicationController
 private
 
     def stock_params
-        params.permit(:name, :user_id, :purchase_amount, :purchase_price)
+        params.require(:stock).permit(:name, :user_id, :purchase_amount, :purchase_price, :ticker_symbol)
     end
 
 end
