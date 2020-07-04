@@ -16,7 +16,7 @@ Stock.create(ticker_symbol: 'NKE', name: 'Nike', user_id: morgan.id, purchase_pr
 Stock.create(ticker_symbol: 'AAPL', name: 'Apple', user_id: morgan.id, purchase_price: 350, purchase_amount: 5)
 Stock.create(ticker_symbol: 'AMZN', name: 'Amazon.com', user_id: morgan.id, purchase_price: 2500, purchase_amount: 1)
 
-Stock.create(ticker_symbol: 'NKE', name: 'Nike', user_id: john.id, purchase_price: 90, purchase_amount: 15)
-Stock.create(ticker_symbol: 'AAPL', name: 'Apple', user_id: john.id, purchase_price: 350, purchase_amount: 9)
-Stock.create(ticker_symbol: 'AMZN', name: 'Amazon', user_id: john.id, purchase_price: 2500, purchase_amount: 4)
+Stock.create(ticker_symbol: 'TSLA', name: 'Tesla', user_id: john.id, purchase_price: 300, purchase_amount: 15)
+Stock.create(ticker_symbol: 'F', name: 'Ford Motor Company', user_id: john.id, purchase_price: 6, purchase_amount: 20)
+Stock.create(ticker_symbol: 'DIS', name: 'Walt Disney Company', user_id: john.id, purchase_price: 100, purchase_amount: 4)
 Stock.create(ticker_symbol: 'UAL', name: 'United Airlines', user_id: john.id, purchase_price: 33, purchase_amount: 80)
